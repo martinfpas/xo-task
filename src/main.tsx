@@ -4,17 +4,18 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ProjectList } from './components/Project.tsx';
+import { Projects } from './components/Projects.tsx';
 import { Layout } from './components/Layout.tsx';
+import { NewProject } from './components/NewProject.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ProjectList />
+    element: <Projects />
   },
   {
     path: '/project',
-    element: <>New Project</>
+    element: < NewProject />
   },
   {
     path: '/project/:id',
