@@ -72,6 +72,5 @@ export const projectSlice = createSlice({
     }
 })
 
-export const { } = projectSlice.actions;
 
 export default projectSlice.reducer;

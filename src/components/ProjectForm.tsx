@@ -45,7 +45,7 @@ export const ProjectForm = (params: any) => {
                             onChange={(_, item) => {
                                 onChange(item?.id);
                             }}
-                            options={usersState?.list.map((user: User): { label: string, id: Number }[] => { return { label: user.name, id: user.id } })}
+                            options={usersState?.list.map((user: User): { label: string, id: number }[] => { return { label: user.name, id: user.id } })}
                             value={value}
                             getOptionLabel={(item: any) => {
                                 let usr = { name: "", id: 0 };

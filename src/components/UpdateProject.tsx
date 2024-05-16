@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { ProjectForm } from "./ProjectForm";
-import { Project as ProjectType, ProjectsListStateType } from "../types/types";
+import { Project as ProjectType } from "../types/types";
 import Stack from "@mui/material/Stack";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { fetchProjects, initialListState, updateProject } from "../redux/reducers/projectSlice";
 import Button from "@mui/material/Button";
 import { AppDispatch, RootState } from "../store";
+import { toNumber } from "../utils";
 
 export const UpdateProject = () => {
     const { id } = useParams();
@@ -26,7 +27,7 @@ export const UpdateProject = () => {
     let currentProject = {};
 
     try {
-        currentProject = projects?.list?.find((project: ProjectType) => project.id == id);
+        currentProject = projects?.list?.find((project: ProjectType) => project.id == toNumber(id));
     } catch (error) {
 
     }

@@ -1,13 +1,13 @@
 export interface User {
-    id: Number,
-    name: String,
-    email: String
+    id: number,
+    name: string,
+    email: string
 }
 
 export interface Project {
-    id: Number,
-    name: String,
-    description: String,
+    id: number,
+    name: string,
+    description: string,
     owner: User
 }
 
