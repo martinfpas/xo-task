@@ -5,13 +5,11 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 export const ProjectForm = (params: any) => {
-    const { project, handleSubmitCallback } = params;
-    const { register, handleSubmit } = useForm<ProjectType>();
+    const { project = { name: "", description: "", owner: "" }, handleSubmitCallback } = params;
+    const { register, handleSubmit } = useForm<ProjectType>({ values: project });
     const onSubmit: SubmitHandler<ProjectType> = data => handleSubmitCallback(data);
 
-    console.log(project);
-
-    return <form onSubmit={handleSubmit(onSubmit)} >
+    return <form onSubmit={handleSubmit(onSubmit)} style={{ width: "60%" }}>
         <Stack spacing={2}>
             <Stack>
                 <label>Name</label>

@@ -4,7 +4,7 @@ import usersReducer from '../redux/reducers/userSlice';
 
 export default configureStore({
   reducer: {
-    projects: projectReducer ,
+    projects: projectReducer,
     users: usersReducer
   },
 })

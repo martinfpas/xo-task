@@ -2,21 +2,31 @@ import { useDispatch, useSelector } from "react-redux"
 import { add, fetchProjects } from "../redux/reducers/projectSlice";
 import { Button, Stack } from "@mui/material";
 import { useEffect } from "react";
-import { ProjectsListStateType } from "../types/types";
+import { ProjectsListStateType, UsersListStateType } from "../types/types";
 import { ProjectList } from "./ProjectList";
 import { useNavigate } from "react-router-dom";
+import { fetchUsers } from "../redux/reducers/userSlice";
 
 
 export const Projects = () => {
-    const projectsListState: ProjectsListStateType = useSelector<{ projects: ProjectsListStateType }>(state => state.projects);
+    const projectsListState: ProjectsListStateType = useSelector<ProjectsListStateType>(state => state.projects);
+    const usersListState: UsersListStateType = useSelector<UsersListStateType>(state => state.users);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(fetchProjects());
-    }, []);
+        if (!projectsListState.called) {
+            dispatch(fetchProjects());
+        }
+    }, [projectsListState?.called]);
 
-    return <Stack alignItems={"center"} justifyContent={"center"} direction={"column"}>
+    useEffect(() => {
+        if (!usersListState.called) {
+            dispatch(fetchUsers());
+        }
+    }, [usersListState?.called]);
+
+    return <Stack alignItems={"center"} justifyContent={"center"} direction={"column"} data-testid="Projects">
         <Stack >
             <Stack direction={"row"} spacing={2}>
                 <Stack>

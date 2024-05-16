@@ -3,7 +3,7 @@ import { Project as ProjectType } from '../types/types';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 
-export const ProjectList = (params: { list: ProjectType }) => {
+export const ProjectList = (params: { list: ProjectType[] }) => {
     const { list } = params;
 
     const columns: GridColDef<(typeof list)[]>[] = [

@@ -1,7 +1,7 @@
 export interface User {
-    id:Number,
-    name:String,
-    email:String
+    id: Number,
+    name: String,
+    email: String
 }
 
 export interface Project {
@@ -12,7 +12,15 @@ export interface Project {
 }
 
 export interface ProjectsListStateType {
-    list:Project[],
-    error?:string,
-    isLoading:boolean
+    called?: boolean,
+    list: Project[],
+    error?: string,
+    isLoading: boolean
+};
+
+export interface UsersListStateType {
+    called?: boolean,
+    list: User[],
+    error?: string,
+    isLoading: boolean
 };

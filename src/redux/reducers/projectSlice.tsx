@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { Project as ProjectType, ProjectsListStateType } from '../../types/types';
 import axios from 'axios';
+import { stat } from 'fs';
 
-const initialListState: ProjectsListStateType = { list: [], error: '', isLoading: false };
+export const initialListState: ProjectsListStateType = { list: [], error: '', isLoading: false, called: false };
 
 export const fetchProjects = createAsyncThunk('project/fetchProjects', () => {
     return axios.get(`${process.env.API_HOST}/projects`).then(response => {
@@ -25,6 +26,7 @@ export const projectSlice = createSlice({
         }),
             builder.addCase(fetchProjects.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.called = true;
                 state.list = action.payload;
             }),
             builder.addCase(fetchProjects.rejected, (state, action) => {
