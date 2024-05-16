@@ -1,9 +1,28 @@
 import { Button, Stack } from '@mui/material';
-import { Project as ProjectType } from '../types/types';
+import { Project as ProjectType, User } from '../types/types';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
+import { fetchUsers } from "../redux/reducers/userSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { AppDispatch, RootState } from '../store';
+
 
 export const ProjectList = (params: { list: ProjectType[] }) => {
+    const usersListState: any = useSelector<RootState>(state => state.users);
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        if (!usersListState.called) {
+            dispatch(fetchUsers());
+        }
+    }, [usersListState?.called]);
+
+    const getUser = (id: Number) => {
+        return usersListState?.list?.find((user: User) => user.id == id) ?? { name: "User Not Found" }
+    }
+
+
     const { list } = params;
 
     const columns: GridColDef<(typeof list)[]>[] = [
@@ -22,8 +41,9 @@ export const ProjectList = (params: { list: ProjectType[] }) => {
         },
         {
             field: 'owner',
-            headerName: 'Owner Id',
-            type: 'number',
+            headerName: 'Owner',
+            type: 'string',
+            valueGetter: (value) => getUser(value).name,
             flex: 1,
             editable: true,
         },

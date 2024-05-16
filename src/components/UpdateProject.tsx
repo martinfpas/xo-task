@@ -5,37 +5,48 @@ import Stack from "@mui/material/Stack";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchProjects, initialListState } from "../redux/reducers/projectSlice";
+import { fetchProjects, initialListState, updateProject } from "../redux/reducers/projectSlice";
 import Button from "@mui/material/Button";
+import { AppDispatch, RootState } from "../store";
 
 export const UpdateProject = () => {
     const { id } = useParams();
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    const projects: ProjectsListStateType = useSelector<ProjectsListStateType>(state => { return state.projects || initialListState });
-
-    console.log("projects", projects);
+    const projects: any = useSelector<RootState>(state => { return state.projects || initialListState });
 
     useEffect(() => {
-        if (!projects.called) {
+        if (!projects?.called) {
             dispatch(fetchProjects());
         }
     }, [projects]);
 
-    const currentProject = projects?.list?.find(project => project.id == id);
+
+    let currentProject = {};
+
+    try {
+        currentProject = projects?.list?.find((project: ProjectType) => project.id == id);
+    } catch (error) {
+
+    }
+
 
     const handleSubmit = (params: ProjectType) => {
-        console.log(params);
+        dispatch(updateProject(params)).then(() => {
+            dispatch(fetchProjects());
+            alert('Project Updated !');
+            navigate('/');
+        }).catch(e => console.log(e));
     }
 
     return <Stack alignItems={"center"} justifyContent={"center"} direction={"column"}>
-        <Stack >
-            <Stack direction={"row"} spacing={2}>
-                <Stack justifyContent={"center"}>
-                    <Button size="small" variant="contained" onClick={() => navigate("/")}>Home</Button>
+        <Stack className="projectFormHeader" >
+            <Stack direction={"row"} spacing={2} >
+                <Stack justifyContent={"center"} flex={0} >
+                    <Button size="medium" variant="contained" onClick={() => navigate("/")}>Home</Button>
                 </Stack>
-                <Stack>
+                <Stack flex={2} alignItems={"center"} pr={6}>
                     <h1>Edit Project #{id}</h1>
                 </Stack>
             </Stack>

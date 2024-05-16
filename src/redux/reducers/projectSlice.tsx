@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { Project as ProjectType, ProjectsListStateType } from '../../types/types';
 import axios from 'axios';
-import { stat } from 'fs';
 
 export const initialListState: ProjectsListStateType = { list: [], error: '', isLoading: false, called: false };
 
@@ -11,15 +10,23 @@ export const fetchProjects = createAsyncThunk('project/fetchProjects', () => {
     })
 })
 
+export const updateProject = createAsyncThunk('project/updateProject', (project: ProjectType) => {
+    return axios.put(`${process.env.API_HOST}/projects/${project.id}`, project).then(response => {
+        return response.data;
+    })
+})
+
+
+export const addProject = createAsyncThunk('project/addProject', (project: ProjectType) => {
+    return axios.post(`${process.env.API_HOST}/projects`, project).then(response => {
+        return response.data;
+    })
+})
+
 export const projectSlice = createSlice({
     name: 'projects',
     initialState: initialListState,
-    reducers: {
-        add: (state) => {
-            state.list.push({ id: 2, name: "123", owner: { id: 1, email: "test@me.com", name: "J Doe" }, description: "test" });
-            console.log(state);
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchProjects.pending, (state) => {
             state.isLoading == true;
@@ -33,10 +40,38 @@ export const projectSlice = createSlice({
                 state.isLoading = false;
                 state.list = [];
                 state.error = action.error.message || 'General Error';
+            }),
+
+            builder.addCase(updateProject.pending, (state) => {
+                state.isLoading == true;
+            }),
+            builder.addCase(updateProject.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.called = true;
+                state.list = action.payload;
+            }),
+            builder.addCase(updateProject.rejected, (state, action) => {
+                state.isLoading = false;
+                state.list = [];
+                state.error = action.error.message || 'General Error';
+            }),
+
+            builder.addCase(addProject.pending, (state) => {
+                state.isLoading == true;
+            }),
+            builder.addCase(addProject.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.called = true;
+                state.list = action.payload;
+            }),
+            builder.addCase(addProject.rejected, (state, action) => {
+                state.isLoading = false;
+                state.list = [];
+                state.error = action.error.message || 'General Error';
             })
     }
 })
 
-export const { add } = projectSlice.actions;
+export const { } = projectSlice.actions;
 
 export default projectSlice.reducer;

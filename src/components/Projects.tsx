@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
-import { add, fetchProjects } from "../redux/reducers/projectSlice";
+import { fetchProjects } from "../redux/reducers/projectSlice";
 import { Button, Stack } from "@mui/material";
 import { useEffect } from "react";
-import { ProjectsListStateType, UsersListStateType } from "../types/types";
 import { ProjectList } from "./ProjectList";
 import { useNavigate } from "react-router-dom";
-import { fetchUsers } from "../redux/reducers/userSlice";
+import { AppDispatch, RootState } from "../store";
+
 
 
 export const Projects = () => {
-    const projectsListState: ProjectsListStateType = useSelector<ProjectsListStateType>(state => state.projects);
-    const usersListState: UsersListStateType = useSelector<UsersListStateType>(state => state.users);
-    const dispatch = useDispatch();
+    const projectsListState: any = useSelector<RootState>(state => state.projects);
+
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,12 +20,6 @@ export const Projects = () => {
         }
     }, [projectsListState?.called]);
 
-    useEffect(() => {
-        if (!usersListState.called) {
-            dispatch(fetchUsers());
-        }
-    }, [usersListState?.called]);
-
     return <Stack alignItems={"center"} justifyContent={"center"} direction={"column"} data-testid="Projects">
         <Stack >
             <Stack direction={"row"} spacing={2}>
@@ -33,14 +27,13 @@ export const Projects = () => {
                     <h1>Project List</h1>
                 </Stack>
                 <Stack justifyContent={"center"}>
-                    <Button size="small" variant="contained" onClick={() => navigate("/project")}>New</Button>
+                    <Button size="medium" variant="contained" onClick={() => navigate("/project")}>New</Button>
                 </Stack>
             </Stack>
         </Stack>
 
         <Stack width={"100%"} >
             <ProjectList list={projectsListState?.list} />
-            <Button onClick={() => { dispatch(add()) }}>x</Button>
         </Stack>
     </Stack>
 }
