@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Projects } from './components/Projects.tsx';
 import { Layout } from './components/Layout.tsx';
 import { NewProject } from './components/NewProject.tsx';
+import { UpdateProject } from './components/UpdateProject.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/project/:id',
-    element: <>Edit Project #</>
+    element: <UpdateProject />
   }
 ]);
 

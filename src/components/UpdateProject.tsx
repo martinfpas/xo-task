@@ -1,10 +1,11 @@
-import Stack from "@mui/material/Stack";
+import { useParams } from "react-router-dom"
 import { ProjectForm } from "./ProjectForm";
 import { Project as ProjectType } from "../types/types";
+import Stack from "@mui/material/Stack";
 
+export const UpdateProject = () => {
+    const { id } = useParams();
 
-
-export const NewProject = () => {
 
     const handleSubmit = (params: ProjectType) => {
         console.log(params);
@@ -14,7 +15,7 @@ export const NewProject = () => {
         <Stack >
             <Stack direction={"row"} spacing={2}>
                 <Stack>
-                    <h1>New Project</h1>
+                    <h1>Edit Project #{id}</h1>
                 </Stack>
 
             </Stack>

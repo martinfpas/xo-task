@@ -1,6 +1,7 @@
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { Project as ProjectType } from '../types/types';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Link } from 'react-router-dom';
 
 export const ProjectList = (params: { list: ProjectType }) => {
     const { list } = params;
@@ -10,22 +11,33 @@ export const ProjectList = (params: { list: ProjectType }) => {
         {
             field: 'name',
             headerName: 'Name',
-            width: 150,
+            flex: 1,
             editable: true,
         },
         {
             field: 'description',
             headerName: 'Description',
-            width: 150,
+            flex: 1,
             editable: true,
         },
         {
             field: 'owner',
             headerName: 'Owner Id',
             type: 'number',
-            width: 110,
+            flex: 1,
             editable: true,
         },
+        {
+            field: 'edit',
+            headerName: 'Edit',
+            description: 'This column has a value getter and is not sortable.',
+            sortable: false,
+            width: 160,
+            valueGetter: (_, row) => row.id,
+            renderCell: (row) => {
+                return <Button variant="contained" component={Link} to={`/project/${row.id}`} >Edit</Button>
+            }
+        }
 
     ];
 
