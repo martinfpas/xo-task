@@ -5,4 +5,4 @@
 3 - # npm run dev 
 4 - Browse http://localhost:5173/ (default) on your browser
 
-# Missin feature delete Project
+## Missing feature: delete Project
